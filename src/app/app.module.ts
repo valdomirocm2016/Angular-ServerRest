@@ -10,13 +10,17 @@ import { RoutingModule } from './app.router';
 import { LoginComponent } from './login/login/login.component';
 import { LoginServiceService } from './login/login-service.service';
 import { AuthGuard } from './login/login-guards';
+import { PedidoComponent } from './pedido/pedido/pedido.component';
+import { PedidoServiceService } from './pedido/pedido-service.service';
+import { ProdutosService } from './produtos/produtos.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    PedidoComponent
   ],
   imports: [
     BrowserModule,
@@ -27,6 +31,8 @@ import { AuthGuard } from './login/login-guards';
   ],
   providers: [
     LoginServiceService,
+    PedidoServiceService,
+    ProdutosService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

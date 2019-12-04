@@ -1,0 +1,60 @@
+<form class="was-validated form-row" #cadastro="ngForm" (ngSubmit)="salvar()">  
+
+    <div class="col-md-2 mb-3">
+      <label for="id">ID</label>
+      <input type="text" ng-model="produto.id" class="form-control" 
+      disabled name="id">
+    </div>
+  
+    
+  
+    <div class="col-md-4 mb-3">
+        <label for="name">PRODUTO</label>
+      <input type="text" [(ngModel)]="produto.name" 
+      class="form-control is-valid" #name="ngModel" name="name" minlength="3" required>
+      <div [hidden]="name.valid" class="invalid-feedback">
+          <p>Nome incompleto</p>
+      </div>
+    </div>
+  
+    
+    <div class="col-md-2 mb-2">
+      <label for="description">DESCRIÇÃO</label>
+      <input type="text" [(ngModel)]="produto.description" 
+      class="form-control is-valid" #description="ngModel" name="description" required>
+      <div class="invalid-feedback">
+          <p>descrição é obrigatório</p>
+      </div>
+    </div>
+  
+    <div class="col-md-2 mb-2">
+      <label for="price">PREÇO</label>
+      <input type="number" [(ngModel)]="produto.price" 
+      class="form-control is-valid" #price="ngModel" name="price" step=".01" required>
+      <div class="invalid-feedback">
+          <p>Preço é obrigatório</p>
+      </div>
+    </div>
+  
+    <div class="col-md-2 mb-2">
+      <label for="imgUrl">URL Imagem</label>
+      <input type="text" [(ngModel)]="produto.imgUrl" 
+      class="form-control is-valid" #imgUrl="ngModel" name="imgUrl" required>
+      <div class="invalid-feedback">
+          <p>Campo é obrigatório</p>
+      </div>
+    </div>
+  
+   
+  
+    <div class="container">
+        <button class="btn btn-success" type="submit" 
+        [disabled]="cadastro.form.invalid">Enviar</button>
+        <button class="btn btn-danger" type="button" 
+        [hidden]="isNew" (click)="excluir()">Excluir</button>
+        <button class="btn btn-warning" type="button" 
+        (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+  
+  

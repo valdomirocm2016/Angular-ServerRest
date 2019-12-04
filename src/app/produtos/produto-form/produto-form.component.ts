@@ -1,40 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Subscription } from 'rxjs/Subscription';
 
-import { ClientesService } from '../clientes.service';
-import { Cliente } from '../cliente';
+import { ProdutosService } from '../produtos.service';
+import { Produto } from '../produto';
 
 
 @Component({
-  selector: 'app-cliente-form',
-  templateUrl: './cliente-form.component.html',
-  styleUrls: ['./cliente-form.component.css'],
+  selector: 'app-produto-form',
+  templateUrl: './produto-form.component.html',
+  styleUrls: ['./produto-form.component.css'],
   preserveWhitespaces: true
 })
-export class ClienteFormComponent implements OnInit {
+export class ProdutoFormComponent implements OnInit {
 
-  private clienteIndex: number;
+  private produtoIndex: number;
   private isNew: boolean = true;
-  private cliente: Cliente;
+  private produto: Produto;
   private subscription: Subscription;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private clienteService: ClientesService) { 
-              }
+    private router: Router,
+    private produtoService: ProdutosService) { }
 
   ngOnInit() {
+
     this.novo();
     this.subscription = this.route.params.subscribe(
       (params: any) => {
         if (params.hasOwnProperty('id')) {
           this.isNew = false;
-          this.clienteIndex = params['id'];
-          this.clienteService.get(this.clienteIndex)
-          .subscribe(data => this.cliente = data);
+          this.produtoIndex = params['id'];
+          this.produtoService.get(this.produtoIndex)
+          .subscribe(data => this.produto = data);
         } else {
           this.isNew = true;
         }
@@ -43,7 +42,7 @@ export class ClienteFormComponent implements OnInit {
   }
 
   novo() {
-    this.cliente = new Cliente();
+    this.produto = new Produto();
   }
 
   cancelar() {
@@ -51,15 +50,15 @@ export class ClienteFormComponent implements OnInit {
   }
 
   voltar() {
-    this.router.navigate(['/clientes']);
+    this.router.navigate(['/produtos']);
   }
 
   salvar() {
     let result;
     if (this.isNew) {
-      result = this.clienteService.add(this.cliente);
+      result = this.produtoService.add(this.produto);
     } else {
-      result = this.clienteService.update(this.cliente);
+      result = this.produtoService.update(this.produto);
     }
     this.novo();
     this.voltar();
@@ -70,15 +69,15 @@ export class ClienteFormComponent implements OnInit {
   }
 
   excluir() {
-    if (this.cliente.id == null) {
-      alert('Selecione algum cliente');
+    if (this.produto.id == null) {
+      alert('Selecione algum Produto');
     } else {
-      if (confirm('Você realmente quer excluir o cliente '+this.cliente.name+'?')) {
-        this.clienteService.remove(this.cliente.id)
+      if (confirm('Você realmente quer excluir o produto '+this.produto.name+'?')) {
+        this.produtoService.remove(this.produto.id)
         .subscribe(
-          data => alert('Cliente removido '+data),
+          data => alert('Produto removido '+data),
           err => {
-            alert('Cliente não removido');
+            alert('Produto não removido');
           });
           this.novo();
           this.voltar();
